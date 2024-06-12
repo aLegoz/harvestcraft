@@ -119,11 +119,7 @@ public class TileEntityGroundTrap extends TileEntity implements ITickable, ITile
 
 		for(int offsetX = -radius; offsetX <= radius; ++offsetX) {
 			for(int offsetZ = -radius; offsetZ <= radius; ++offsetZ) {
-				if(offsetX * offsetX + offsetZ * offsetZ <= radius * radius
-						&& (offsetX != -(radius - 1) || offsetZ != -(radius - 1))
-						&& (offsetX != radius - 1 || offsetZ != radius - 1)
-						&& (offsetX != radius - 1 || offsetZ != -(radius - 1))
-						&& (offsetX != -(radius - 1) || offsetZ != radius - 1)) {
+				if(offsetX == 0 || offsetZ == 0) {
 					final BlockPos pos = new BlockPos(varX + offsetX, varY, varZ + offsetZ);
 					if (!world.isBlockLoaded(pos)) continue;
 					final Block blockAtCoords = world.getBlockState(pos).getBlock();
@@ -320,14 +316,11 @@ public class TileEntityGroundTrap extends TileEntity implements ITickable, ITile
 
 		for(int offsetX = -radius; offsetX <= radius; ++offsetX) {
 			for(int offsetZ = -radius; offsetZ <= radius; ++offsetZ) {
-				if(offsetX * offsetX + offsetZ * offsetZ > radius * radius
-						|| offsetX == -radius - 1 && offsetZ == -radius - 1
-						|| offsetX == radius - 1 && offsetZ == radius - 1
-						|| offsetX == radius - 1 && offsetZ == -radius - 1
-						|| offsetX == -radius - 1 && offsetZ == radius - 1)
+				if(offsetX * offsetX + offsetZ * offsetZ > radius * radius) 
 					continue;
 				final BlockPos pos = new BlockPos(varX + offsetX, varY, varZ + offsetZ);
-				if (!world.isBlockLoaded(pos)) continue;
+				if (!world.isBlockLoaded(pos)) 
+					continue;
 				final Block blockAtCoords = world.getBlockState(pos).getBlock();
 				if(blockAtCoords instanceof BlockDirt || blockAtCoords instanceof BlockGrass) {
 					speed = (int) (speed * 0.95);
